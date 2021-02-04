@@ -89,3 +89,29 @@ res.end(`
 
 推荐的做法是两种都写上，兼容性最好。
 
+## 使用单独的文件管理HTML模板
+
+单独定义html的模板文件`index.template.html`，注意在body里写上vue-server-renderer所需的注释`<!--vue-ssr-outlet-->`，不要写错
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--vue-ssr-outlet-->
+  </body>
+</html>
+```
+
+然后在`createRenderer`时指定对应的模板，通过`fs`模块将文件内容读出且设置为utf-8编码
+
+```js
+const renderer = require("vue-server-renderer").createRenderer({
+  template: fs.readFileSync("./index.template.html", "utf-8"),
+});
+```
+
