@@ -20,12 +20,16 @@ server.get("/", (req, res) => {
   });
 
   renderer
-    .renderToString(app)
+    .renderToString(app, {
+      title: "拉勾教育",
+      meta: '<meta name="description" content="拉勾教育" >',
+    })
     .then((html) => {
       res.setHeader("Content-Type", "text/html; charset=utf-8");
       res.end(html);
     })
     .catch((e) => {
+      console.dir(e);
       return res.status(500).end("Internal Server Error.");
     });
 });

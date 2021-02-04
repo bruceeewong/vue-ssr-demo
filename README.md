@@ -115,3 +115,26 @@ const renderer = require("vue-server-renderer").createRenderer({
 });
 ```
 
+## 动态设置文档title和meta
+
+在html模板中使用`{{}}`两个大括号绑定插值，使用`{{{}}}`三个大括号原样输出文本。
+
+```html
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {{{ meta }}}
+    <title>{{ title }}</title>
+  </head>
+```
+
+在`renderToString`方法中传入模板变量即可：
+
+```js
+renderer
+    .renderToString(app, {
+      title: "拉勾教育",
+      meta: '<meta name="description" content="拉勾教育" >',
+    })
+```
+
