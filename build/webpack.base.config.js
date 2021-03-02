@@ -43,14 +43,14 @@ module.exports = {
       },
       // 处理vue资源
       {
-        test: /\.vue/$,
+        test: /\.vue$/,
         loader: "vue-loader",
       },
       // 处理CSS资源
       // 包括css文件与'.vue'文件的<style/块
       {
         test: /\.css$/,
-        loader: ["vue-style-loader", "css-loader"],
+        use: ["vue-style-loader", "css-loader"],
       },
       // CSS预处理(按需)
       // {
