@@ -20,6 +20,7 @@ module.exports = merge(baseConfig, {
 
   // 不打包 node_modules 第三方包,保留require 方式直接加载
   externals: [
+    // 排除第三包如express等,把CSS还是打包进来
     nodeExternals({
       // 白名单中的资源依然打包
       allowlist: [/\.css$/],

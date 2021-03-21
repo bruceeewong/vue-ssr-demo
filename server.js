@@ -1,26 +1,25 @@
-const Vue = require("vue");
 const express = require("express");
 const fs = require("fs");
-const renderer = require("vue-server-renderer").createRenderer({
-  template: fs.readFileSync("./index.template.html", "utf-8"),
-});
+
+const serverBundle = require("./dist/vue-ssr-server-bundle.json");
+const template = fs.readFileSync("./index.template.html", "utf-8");
+const clientManifest = require("./dist/vue-ssr-client-manifest.json");
+
+const renderer = require("vue-server-renderer").createBundleRenderer(
+  serverBundle,
+  {
+    template,
+    clientManifest,
+  }
+);
 
 const server = express();
 
-server.get("/", (req, res) => {
-  const app = new Vue({
-    template: `
-      <div id="app">
-        <h1>{{ message }}</h1>
-      </div>
-    `,
-    data: {
-      message: "拉勾教育",
-    },
-  });
+server.use("/dist", express.static("./dist")); // 开放dist目录静态资源
 
+server.get("/", (req, res) => {
   renderer
-    .renderToString(app, {
+    .renderToString({
       title: "拉勾教育",
       meta: '<meta name="description" content="拉勾教育" >',
     })
