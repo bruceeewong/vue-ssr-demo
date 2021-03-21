@@ -4,7 +4,7 @@ const { createBundleRenderer } = require("vue-server-renderer");
 const setupDevServer = require("./build/setup-dev-server");
 
 const server = express();
-server.use("/dist", express.static("./dist")); // 开放dist目录静态资源
+server.use("/dist", express.static("./dist")); // 开放物理磁盘中的dist目录静态资源
 
 const isProd = process.env.NODE_ENV === "production";
 let renderer;
@@ -51,7 +51,7 @@ server.get(
     ? handleRender
     : async (req, res) => {
         await onReady;
-        handleRender();
+        handleRender(req, res);
       }
 );
 
