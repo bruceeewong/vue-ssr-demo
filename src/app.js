@@ -5,7 +5,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 
-// 导出一个工厂函数，用于创建新的
+// 导出一个工厂函数，用于创建新的, 避免状态污染
 // 应用程序、router 和 store 实例
 export function createApp() {
   const app = new Vue({
