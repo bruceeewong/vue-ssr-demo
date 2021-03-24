@@ -29,24 +29,24 @@ if (isProd) {
   });
 }
 
-const handleRender = (req, res) => {
-  renderer
-    .renderToString({
+const handleRender = async (req, res) => {
+  try {
+    const html = await renderer.renderToString({
       title: "拉勾教育",
       meta: '<meta name="description" content="拉勾教育" >',
-    })
-    .then((html) => {
-      res.setHeader("Content-Type", "text/html; charset=utf-8");
-      res.end(html);
-    })
-    .catch((e) => {
-      console.dir(e);
-      return res.status(500).end("Internal Server Error.");
+      url: req.url, // 将请求路径注入上下文
     });
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.end(html);
+  } catch (err) {
+    console.dir(err);
+    return res.status(500).end("Internal Server Error.");
+  }
 };
 
+// 服务端路径设为*, 任何路径都命中前端页面
 server.get(
-  "/",
+  "*",
   isProd
     ? handleRender
     : async (req, res) => {
