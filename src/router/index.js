@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import Home from "@/pages/Home";
 
 Vue.use(VueRouter);
 
@@ -15,13 +16,14 @@ export function createRouter() {
       {
         path: "/about",
         name: "about",
-        component: () => import("@pages/About"),
+        component: () => import("@/pages/About"),
       },
       {
         path: "*",
         name: "error404",
-        component: () => import("@pages/404"),
+        component: () => import("@/pages/Error404"),
       },
     ],
   });
+  return router;
 }
